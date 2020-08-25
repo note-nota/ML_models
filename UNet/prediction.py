@@ -10,7 +10,7 @@ class args:
     n_classes = 2
     l2 = 0.0
     weights = "./params/model.h5"
-    img = "/home/yudai/Pictures/raw-img/train/cat/207.jpeg"
+    img = "./dataset/validation/cat.16.jpg"
 
 
 def prediction(img: np.ndarray) -> np.ndarray:
@@ -31,9 +31,9 @@ def to_colormap(img: np.ndarray, original_shape: Tuple[int]) -> np.ndarray:
 
 
 if __name__ == "__main__":
-    config = tf.ConfigProto()
+    config = tf.compat.v1.ConfigProto()
     config.gpu_options.allow_growth = True
-    tf.keras.backend.set_session(tf.Session(config=config))
+    tf.compat.v1.keras.backend.set_session(tf.compat.v1.Session(config=config))
 
     img_original = Image.open(args.img).convert("RGB")
     original_shape = img_original.size
@@ -48,3 +48,5 @@ if __name__ == "__main__":
     plt.imshow(img_original)
     plt.imshow(pred, alpha=0.3)
     plt.show()
+
+    plt.savefig("prediction_cat.jpg")
